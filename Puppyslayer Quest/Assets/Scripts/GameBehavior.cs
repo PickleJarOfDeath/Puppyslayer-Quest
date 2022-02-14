@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameBehavior : MonoBehaviour
 {
+    public bool showWinScreen = false;
     public string labelText = "collect all 4 items and win your freedom I guess...";
     public int maxItems = 4;
-    private int _itemsCollected = 0;
+    public int _itemsCollected = 0;
 
     public int Items
     {
@@ -21,6 +23,8 @@ public class GameBehavior : MonoBehaviour
             if (_itemsCollected >= maxItems)
             {
                 labelText = "you've found all the items";
+                showWinScreen = true;
+                Time.timeScale = 0f;
             }
             else
             {
@@ -47,9 +51,17 @@ public class GameBehavior : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.Box(new Rect(20, 20, 150, 25), "player health" + _playerHP);
-        GUI.Box(new Rect(20, 20, 150, 25), "items collected" + _itemsCollected);
+        GUI.Box(new Rect(20, 20, 150, 25), "player health " + _playerHP);
+        GUI.Box(new Rect(20, 50, 150, 25), "items collected " + _itemsCollected);
         GUI.Box(new Rect(Screen.width / 2 - 100, Screen.height - 50, 300, 50), labelText);
+        if (showWinScreen)
+        {
+            if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "you won."))
+            {
+                SceneManager.LoadScene(0);
+                Time.timeScale = 1.0f;
+            }
+        }
     }
     // Start is called before the first frame update
     void Start()
