@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5472547568731203547}
   - component: {fileID: 8002224455840296371}
   - component: {fileID: 8020739530648227414}
-  - component: {fileID: 275593153672339263}
   - component: {fileID: 5715217448020408959}
   - component: {fileID: 1171778769268082949}
   - component: {fileID: 2042658577243328950}
@@ -100,22 +99,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &275593153672339263
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3003890390440900271}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.25
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!195 &5715217448020408959
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -150,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8e50cf9766f364da396378207cbda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   patrolRoute: {fileID: 0}
   locations: []
 --- !u!135 &2042658577243328950

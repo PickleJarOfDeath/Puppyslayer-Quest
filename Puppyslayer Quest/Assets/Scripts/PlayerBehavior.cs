@@ -32,6 +32,26 @@ public class PlayerBehavior : MonoBehaviour
         {
             _gameManager.HP -= 1;
         }
+
+        if (collision.gameObject.name == "HPpickup")
+        {
+            _gameManager.HP += 5;
+        }
+
+        if (collision.gameObject.name == "KillPickup")
+        {
+            _gameManager.HP -= 5;
+        }
+
+        if (collision.gameObject.name == "DefensePickup")
+        {
+            _gameManager.HP *= 2;
+        }
+
+        if (collision.gameObject.name == "PowerPickup")
+        {
+            _gameManager.HP += 5;
+        }
     }
 
     // Update is called once per frame
