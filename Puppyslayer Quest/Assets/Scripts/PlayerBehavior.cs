@@ -82,12 +82,6 @@ public class PlayerBehavior : MonoBehaviour
 
             bulletRB.velocity = this.transform.forward * bulletSpeed;
         }
-
-        /*
-        transform.Translate(Vector3.forward * vInput * Time.deltaTime);
-
-        transform.Rotate(Vector3.up * hInput * Time.deltaTime);
-        */
     }
 
     void FixedUpdate()
