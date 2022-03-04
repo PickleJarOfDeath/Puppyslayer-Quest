@@ -19,6 +19,10 @@ public class PlayerBehavior : MonoBehaviour
     private CapsuleCollider _col;
     private GameBehavior _gameManager;
 
+    public delegate void JumpingEvent();
+
+    public event JumpingEvent playerJump;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -72,6 +76,7 @@ public class PlayerBehavior : MonoBehaviour
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
             _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            playerJump();
         }
 
         if (Input.GetMouseButtonDown(0))
