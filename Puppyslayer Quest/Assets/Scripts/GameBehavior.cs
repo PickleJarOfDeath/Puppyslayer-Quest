@@ -7,17 +7,24 @@ using CustomExtensions;
 public class GameBehavior : MonoBehaviour, IManager
 {
     private string _state;
-    public bool showWinScreen = false;
-    public bool showLossScreen = false;
     public string labelText = "collect all 4 items and win your freedom I guess...";
     public int maxItems = 4;
     public int _itemsCollected = 0;
     public Stack<string> lootStack = new Stack<string>();
+    public GameObject startLevelUI;
+    public GameObject failedLevelUI;
+    public GameObject completeLevelUI;
 
     public string State
     {
-        get { return _state; }
-        set { _state = value; }
+        get
+        {
+            return _state;
+        }
+        set
+        {
+            _state = value;
+        }
     }
     public int Items
     {
@@ -31,8 +38,7 @@ public class GameBehavior : MonoBehaviour, IManager
             Debug.LogFormat("Items: {0}", _itemsCollected);
             if (_itemsCollected >= maxItems)
             {
-                labelText = "you've found all the items";
-                showWinScreen = true;
+                CompleteLevel();
                 Time.timeScale = 0f;
             }
             else
@@ -40,10 +46,9 @@ public class GameBehavior : MonoBehaviour, IManager
                 labelText = "items found, only " + (maxItems - _itemsCollected) + " more to go.";
             }
         }
-       
     }
 
-    private int _playerHP = 10;
+    public int _playerHP = 10;
 
     public int HP
     {
@@ -57,8 +62,7 @@ public class GameBehavior : MonoBehaviour, IManager
             Debug.LogFormat("Lives: {0}", _playerHP);
             if (_playerHP <= 0)
             {
-                labelText = "lol rip";
-                showLossScreen = true;
+                FailedLevel();
                 Time.timeScale = 0;
             }
             else
@@ -68,43 +72,32 @@ public class GameBehavior : MonoBehaviour, IManager
         }
     }
 
-    void RestartLevel()
+    public void StartLevel()
     {
-        SceneManager.LoadScene(0);
-        Time.timeScale = 1.0f;
+        startLevelUI.SetActive(true);
+        if (Input.GetMouseButtonDown(1))
+        {
+            startLevelUI.SetActive(false);
+            Time.timeScale = 1f;
+        }
     }
 
-    private void OnGUI()
+    public void FailedLevel()
     {
-        GUI.Box(new Rect(20, 20, 150, 25), "player health " + _playerHP);
-        GUI.Box(new Rect(20, 50, 150, 25), "items collected " + _itemsCollected);
-        GUI.Box(new Rect(Screen.width / 2 - 100, Screen.height - 50, 300, 50), labelText);
-        if (showWinScreen)
-        {
-            if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "you won."))
-            {
-                Utilities.RestartLevel(0);
-            }
-        }
-        if (showLossScreen)
-        {
-            if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "you lose"))
-            {
-                try
-                {
-                    Utilities.RestartLevel(-1);
-                }
-                catch (System.ArgumentException e)
-                {
-                    Utilities.RestartLevel(0);
-                    debug("Reverting to scene 0: " + e.ToString());
-                }
-                finally
-                {
-                    debug("Restart handled...");
-                }
-            }
-        }
+        failedLevelUI.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void CompleteLevel()
+    {
+        completeLevelUI.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    void RestartLevel()
+    {
+        Utilities.RestartLevel(0);
+        Time.timeScale = 1f;
     }
 
     public delegate void DebugDelegate(string newText);
